@@ -15,16 +15,14 @@ credits = pd.read_csv("data/tmdb_5000_credits.csv")
 movies = movies.merge(credits, on="title")
 
 model = pickle.load(open("model.pkl", "rb"))
-
-# Load TMDB API Key securely from .env
-from dotenv import load_dotenv
 import os
 
-load_dotenv()  # Loads values from .env file
-TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+# Load API key from Streamlit Secrets (Streamlit Cloud)
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
 
 if not TMDB_API_KEY:
-    st.error("❌ TMDB_API_KEY missing! Add it inside your .env file.")
+    st.error("❌ TMDB_API_KEY missing! Add it in Streamlit → Settings → Secrets.")
+
 
 
 nltk.download('vader_lexicon')
